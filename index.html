@@ -582,7 +582,7 @@
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Nombre completo *</label>
-              <input class="form-input" type="text" placeholder="Tu nombre completo" required id="nombre" minlength="10"/><small style="color:var(--text3);font-size:11px;margin-top:4px">Mínimo 10 caracteres</small>
+              <input class="form-input" type="text" placeholder="Ej: Juan Carlos Rodríguez Martínez" required id="nombre" minlength="40"/><small style="color:var(--text3);font-size:11px;margin-top:4px">Nombre y apellidos completos — mínimo 40 caracteres</small>
             </div>
             <div class="form-group">
               <label class="form-label">Teléfono / WhatsApp *</label>
@@ -617,6 +617,68 @@
           <div id="formMsg" style="display:none;text-align:center;padding:12px;border-radius:5px;font-size:13px;margin-top:12px"></div>
         </form>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- CLIENTES FELICES -->
+<div style="background:var(--off-white);border-top:1px solid var(--border)">
+  <div class="section">
+    <div style="text-align:center;margin-bottom:48px">
+      <span class="section-tag" style="display:block;text-align:center">Testimonios</span>
+      <h2 class="section-title" style="text-align:center">Clientes <em>felices</em></h2>
+      <p style="font-size:14px;color:var(--text2);line-height:1.8;max-width:500px;margin:0 auto">Estas son las historias de personas que confiaron en iProperties Latam para encontrar su hogar.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      <!-- Testimonio 1 -->
+      <div style="background:var(--white);border-radius:10px;padding:32px;box-shadow:var(--shadow);position:relative">
+        <div style="font-size:32px;color:var(--gold);margin-bottom:16px;line-height:1">❝</div>
+        <p style="font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px;font-style:italic">"Gracias a iProperties encontré el apartamento perfecto en Bogotá. El proceso fue rápido, transparente y con todo el respaldo legal. ¡Los recomiendo al 100%!"</p>
+        <div style="display:flex;align-items:center;gap:12px;border-top:1px solid var(--gray);padding-top:16px">
+          <div style="width:44px;height:44px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:16px;flex-shrink:0">YD</div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--navy)">Yesid Duran</div>
+            <div style="font-size:12px;color:var(--text3)">Comprador · Bogotá</div>
+          </div>
+          <div style="margin-left:auto;color:var(--gold);font-size:14px">★★★★★</div>
+        </div>
+      </div>
+      <!-- Testimonio 2 -->
+      <div style="background:var(--navy);border-radius:10px;padding:32px;box-shadow:var(--shadow2);position:relative">
+        <div style="font-size:32px;color:var(--gold2);margin-bottom:16px;line-height:1">❝</div>
+        <p style="font-size:14px;color:rgba(255,255,255,0.8);line-height:1.8;margin-bottom:24px;font-style:italic">"Vendí mi propiedad en Madrid, Cundinamarca de forma rápida y segura. Paula y Roberth me acompañaron en cada paso. Profesionales de verdad."</p>
+        <div style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,0.1);padding-top:16px">
+          <div style="width:44px;height:44px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;color:var(--navy);font-weight:700;font-size:16px;flex-shrink:0">AR</div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:white">Andres Rodriguez</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.5)">Vendedor · Cundinamarca</div>
+          </div>
+          <div style="margin-left:auto;color:var(--gold2);font-size:14px">★★★★★</div>
+        </div>
+      </div>
+      <!-- Testimonio 3 -->
+      <div style="background:var(--white);border-radius:10px;padding:32px;box-shadow:var(--shadow);position:relative">
+        <div style="font-size:32px;color:var(--gold);margin-bottom:16px;line-height:1">❝</div>
+        <p style="font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px;font-style:italic">"El proceso de crédito hipotecario con Banco de Bogotá fue muy ágil gracias a iProperties. Me ayudaron con toda la documentación y en tiempo récord."</p>
+        <div style="display:flex;align-items:center;gap:12px;border-top:1px solid var(--gray);padding-top:16px">
+          <div style="width:44px;height:44px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:16px;flex-shrink:0">MC</div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--navy)">María Castro</div>
+            <div style="font-size:12px;color:var(--text3)">Compradora · Bogotá</div>
+          </div>
+          <div style="margin-left:auto;color:var(--gold);font-size:14px">★★★★★</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Banner CTA -->
+    <div style="margin-top:48px;background:var(--navy);border-radius:12px;padding:48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px">
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:28px;color:white;margin-bottom:8px">¿Listo para encontrar tu <em style="color:var(--gold2)">hogar ideal</em>?</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.6)">Más de 100 familias ya confiaron en nosotros. Tú puedes ser la siguiente.</div>
+      </div>
+      <a href="#contacto" class="btn-hero-primary" style="white-space:nowrap">Hablar con un asesor →</a>
     </div>
   </div>
 </div>
@@ -816,9 +878,9 @@ async function handleSubmit(e) {
   const email = document.getElementById('email').value.trim();
 
   // Validar nombre — mínimo 40 caracteres
-  if (nombre.length < 10) {
+  if (nombre.length < 40) {
     msg.style.cssText = 'display:block;background:#FFEBEE;border:1px solid #EF9A9A;color:#C62828;border-radius:5px;padding:12px;font-size:13px';
-    msg.textContent = `⚠️ Por favor escribe tu nombre completo. Tienes ${nombre.length} caracteres, mínimo 10.`;
+    msg.textContent = `⚠️ Por favor escribe tu nombre completo. Tienes ${nombre.length} caracteres, mínimo 40.`;
     return;
   }
 
