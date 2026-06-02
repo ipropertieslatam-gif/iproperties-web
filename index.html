@@ -622,6 +622,65 @@
 </div>
 
 
+<!-- RESEÑAS ABIERTAS -->
+<div style="background:var(--white);border-top:1px solid var(--border)" id="resenas">
+  <div class="section">
+    <div style="text-align:center;margin-bottom:48px">
+      <span class="section-tag" style="display:block;text-align:center">Comunidad iProperties</span>
+      <h2 class="section-title" style="text-align:center">Déjanos tu <em>opinión</em></h2>
+      <p style="font-size:14px;color:var(--text2);line-height:1.8;max-width:500px;margin:0 auto">¿Trabajaste con nosotros? Cuéntanos tu experiencia. Tu opinión nos ayuda a mejorar y a otros clientes a confiar.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start">
+      <!-- Formulario de reseña -->
+      <div style="background:var(--off-white);border-radius:12px;padding:32px;box-shadow:var(--shadow)">
+        <div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:20px">✍️ Escribe tu reseña</div>
+        <div class="form-group">
+          <label class="form-label">Tu nombre *</label>
+          <input class="form-input" type="text" placeholder="Nombre completo" id="reseñaNombre"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Calificación *</label>
+          <div id="starRating" style="display:flex;gap:6px;font-size:28px;cursor:pointer;margin-bottom:4px">
+            <span onclick="setStars(1)" onmouseover="hoverStars(1)" onmouseout="resetStars()" style="transition:transform 0.1s">⭐</span>
+            <span onclick="setStars(2)" onmouseover="hoverStars(2)" onmouseout="resetStars()" style="transition:transform 0.1s">⭐</span>
+            <span onclick="setStars(3)" onmouseover="hoverStars(3)" onmouseout="resetStars()" style="transition:transform 0.1s">⭐</span>
+            <span onclick="setStars(4)" onmouseover="hoverStars(4)" onmouseout="resetStars()" style="transition:transform 0.1s">⭐</span>
+            <span onclick="setStars(5)" onmouseover="hoverStars(5)" onmouseout="resetStars()" style="transition:transform 0.1s">⭐</span>
+          </div>
+          <small id="starLabel" style="font-size:11px;color:var(--text3)">Haz clic para calificar</small>
+        </div>
+        <div class="form-group">
+          <label class="form-label">¿Qué servicio usaste?</label>
+          <select class="form-select" id="reseñaServicio">
+            <option value="">Seleccionar...</option>
+            <option>Compra de inmueble</option>
+            <option>Venta de inmueble</option>
+            <option>Crédito hipotecario</option>
+            <option>Asesoría legal</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tu comentario *</label>
+          <textarea class="form-textarea" placeholder="Cuéntanos tu experiencia con iProperties Latam..." id="reseñaComentario" style="min-height:100px"></textarea>
+        </div>
+        <button onclick="enviarResena()" id="reseñaBtn" style="width:100%;padding:13px;background:var(--navy);color:white;font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;border:none;border-radius:5px;cursor:pointer;transition:background 0.2s">
+          Publicar reseña →
+        </button>
+        <div id="reseñaMsg" style="display:none;margin-top:12px;padding:12px;border-radius:5px;font-size:13px;text-align:center"></div>
+      </div>
+
+      <!-- Lista de reseñas -->
+      <div>
+        <div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:20px">💬 Lo que dicen nuestros clientes</div>
+        <div id="reseñasList" style="display:flex;flex-direction:column;gap:16px;max-height:480px;overflow-y:auto;padding-right:4px">
+          <div style="text-align:center;padding:40px;color:var(--text3);font-size:13px">Cargando reseñas...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- CLIENTES FELICES -->
 <div style="background:var(--off-white);border-top:1px solid var(--border)">
   <div class="section">
@@ -868,6 +927,21 @@ async function cargarPropiedades() {
 
 cargarPropiedades();
 
+function actualizarContador(len) {
+  const contador = document.getElementById('contadorNombre');
+  const input = document.getElementById('nombre');
+  const btn = document.getElementById('submitBtn');
+  if (len < 40) {
+    contador.textContent = `Nombre y apellidos completos — faltan ${40-len} caracteres (${len}/40)`;
+    contador.style.color = len > 20 ? '#E65100' : '#C62828';
+    input.style.borderColor = '#EF9A9A';
+  } else {
+    contador.textContent = `✓ Nombre completo (${len}/40+)`;
+    contador.style.color = '#2E7D32';
+    input.style.borderColor = '#A5D6A7';
+  }
+}
+
 async function handleSubmit(e) {
   e.preventDefault();
   const btn = document.getElementById('submitBtn');
@@ -941,6 +1015,105 @@ window.addEventListener('scroll', () => {
   const nav = document.getElementById('navbar');
   nav.style.boxShadow = window.scrollY > 20 ? '0 4px 30px rgba(11,31,58,0.15)' : '0 2px 20px rgba(11,31,58,0.08)';
 });
+
+// ── SISTEMA DE RESEÑAS ──
+let starsSelected = 0;
+const starLabels = ['','⭐ Malo','⭐⭐ Regular','⭐⭐⭐ Bueno','⭐⭐⭐⭐ Muy bueno','⭐⭐⭐⭐⭐ Excelente'];
+
+function hoverStars(n) {
+  const stars = document.getElementById('starRating').children;
+  for (let i=0; i<5; i++) stars[i].style.transform = i<n ? 'scale(1.2)' : 'scale(1)';
+}
+function resetStars() {
+  const stars = document.getElementById('starRating').children;
+  for (let i=0; i<5; i++) stars[i].style.transform = i<starsSelected ? 'scale(1.2)' : 'scale(1)';
+}
+function setStars(n) {
+  starsSelected = n;
+  document.getElementById('starLabel').textContent = starLabels[n];
+  document.getElementById('starLabel').style.color = '#E65100';
+  resetStars();
+}
+
+async function cargarResenas() {
+  try {
+    const res = await fetch(`${SUPA_URL}/rest/v1/resenas?select=*&order=created_at.desc&limit=20`, {
+      headers: { apikey: SUPA_KEY, Authorization: `Bearer ${SUPA_KEY}` }
+    });
+    const data = await res.json();
+    const lista = document.getElementById('reseñasList');
+    if (!Array.isArray(data) || data.length === 0) {
+      lista.innerHTML = '<div style="text-align:center;padding:32px;color:var(--text3);font-size:13px">Sé el primero en dejar una reseña ⭐</div>';
+      return;
+    }
+    lista.innerHTML = data.map(r => `
+      <div style="background:var(--off-white);border-radius:8px;padding:16px;border:1px solid var(--border)">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0">${(r.nombre||'A').charAt(0).toUpperCase()}</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--navy)">${r.nombre||'Anónimo'}</div>
+              ${r.servicio ? `<div style="font-size:11px;color:var(--text3)">${r.servicio}</div>` : ''}
+            </div>
+          </div>
+          <div style="color:#F59E0B;font-size:13px">${'★'.repeat(r.estrellas||5)}${'☆'.repeat(5-(r.estrellas||5))}</div>
+        </div>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6;font-style:italic">"${r.comentario||''}"</p>
+        <div style="font-size:11px;color:var(--text3);margin-top:8px">${new Date(r.created_at).toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'})}</div>
+      </div>
+    `).join('');
+  } catch(e) {
+    document.getElementById('reseñasList').innerHTML = '<div style="text-align:center;padding:32px;color:var(--text3);font-size:13px">Error cargando reseñas.</div>';
+  }
+}
+
+async function enviarResena() {
+  const nombre = document.getElementById('reseñaNombre').value.trim();
+  const comentario = document.getElementById('reseñaComentario').value.trim();
+  const servicio = document.getElementById('reseñaServicio').value;
+  const msg = document.getElementById('reseñaMsg');
+  const btn = document.getElementById('reseñaBtn');
+
+  if (!nombre) { 
+    msg.style.cssText = 'display:block;background:#FFEBEE;border:1px solid #EF9A9A;color:#C62828;border-radius:5px;padding:10px;font-size:13px';
+    msg.textContent = '⚠️ Por favor escribe tu nombre.'; return; 
+  }
+  if (starsSelected === 0) { 
+    msg.style.cssText = 'display:block;background:#FFEBEE;border:1px solid #EF9A9A;color:#C62828;border-radius:5px;padding:10px;font-size:13px';
+    msg.textContent = '⚠️ Por favor selecciona una calificación.'; return; 
+  }
+  if (comentario.length < 20) { 
+    msg.style.cssText = 'display:block;background:#FFEBEE;border:1px solid #EF9A9A;color:#C62828;border-radius:5px;padding:10px;font-size:13px';
+    msg.textContent = `⚠️ El comentario debe tener al menos 20 caracteres (${comentario.length}/20).`; return; 
+  }
+
+  btn.textContent = 'Publicando...'; btn.disabled = true; msg.style.display = 'none';
+
+  try {
+    const res = await fetch(`${SUPA_URL}/rest/v1/resenas`, {
+      method: 'POST',
+      headers: { apikey: SUPA_KEY, Authorization: `Bearer ${SUPA_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+      body: JSON.stringify({ nombre, estrellas: starsSelected, servicio: servicio||null, comentario })
+    });
+    if (res.ok) {
+      msg.style.cssText = 'display:block;background:#E8F5E9;border:1px solid #A5D6A7;color:#2E7D32;border-radius:5px;padding:10px;font-size:13px';
+      msg.textContent = '✅ ¡Gracias por tu reseña! Ya aparece en la lista.';
+      document.getElementById('reseñaNombre').value = '';
+      document.getElementById('reseñaComentario').value = '';
+      document.getElementById('reseñaServicio').value = '';
+      starsSelected = 0;
+      document.getElementById('starLabel').textContent = 'Haz clic para calificar';
+      resetStars();
+      cargarResenas();
+    } else throw new Error();
+  } catch(e) {
+    msg.style.cssText = 'display:block;background:#FFEBEE;border:1px solid #EF9A9A;color:#C62828;border-radius:5px;padding:10px;font-size:13px';
+    msg.textContent = '❌ Error al publicar. Intenta de nuevo.';
+  }
+  btn.textContent = 'Publicar reseña →'; btn.disabled = false;
+}
+
+cargarResenas();
 </script>
 </body>
 </html>
